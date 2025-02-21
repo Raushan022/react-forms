@@ -21,15 +21,14 @@ const ExpenseForm = ({ setExpenses }) => {
   };
 
   const handleChange = (e) => {
-    // console.log(e.target)
     const { name, value } = e.target;
     setExpense((prevData) => ({
       ...prevData,
-      [name]: value,
-      //  name: e.target.value,       //can write like this also, same thing
+      // [name]: value,
+       [name]: e.target.value,       //can write like this also, same thing
     }));
   };
-  // console.log(expense);
+
   return (
     <form className="expense-form" onSubmit={handleSubmit}>
       <div className="input-container">
