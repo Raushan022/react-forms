@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
 const ExpenseForm = ({ setExpenses }) => {
-  // const [title, setTitle] = useState("");
-  // const [category, setCategory] = useState("");
-  // const [amount, setAmount] = useState("");
   const [expense, setExpense] = useState({
     title: "",
     category: "",
@@ -12,10 +9,6 @@ const ExpenseForm = ({ setExpenses }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // console.log({title, category, amount, id: crypto.randomUUID()})
-    // const expense = { title, category, amount, id: crypto.randomUUID() };
-    // console.log(expense)
     setExpenses((prevState) => [
       ...prevState,
       { ...expense, id: crypto.randomUUID() },
@@ -27,6 +20,16 @@ const ExpenseForm = ({ setExpenses }) => {
     });
   };
 
+  const handleChange = (e) => {
+    // console.log(e.target)
+    const { name, value } = e.target;
+    setExpense((prevData) => ({
+      ...prevData,
+      [name]: value,
+      //  name: e.target.value,       //can write like this also, same thing
+    }));
+  };
+  // console.log(expense);
   return (
     <form className="expense-form" onSubmit={handleSubmit}>
       <div className="input-container">
@@ -35,9 +38,7 @@ const ExpenseForm = ({ setExpenses }) => {
           id="title"
           name="title"
           value={expense.title}
-          onChange={(e) =>
-            setExpense((prevData) => ({ ...prevData, title: e.target.value }))
-          }
+          onChange={handleChange}
         />
       </div>
       <div className="input-container">
@@ -46,12 +47,7 @@ const ExpenseForm = ({ setExpenses }) => {
           id="category"
           name="category"
           value={expense.category}
-          onChange={(e) =>
-            setExpense((prevData) => ({
-              ...prevData,
-              category: e.target.value,
-            }))
-          }
+          onChange={handleChange}
         >
           <option value="" hidden>
             Select Category
@@ -69,9 +65,7 @@ const ExpenseForm = ({ setExpenses }) => {
           id="amount"
           name="amount"
           value={expense.amount}
-          onChange={(e) =>
-            setExpense((prevData) => ({ ...prevData, amount: e.target.value }))
-          }
+          onChange={handleChange}
         />
       </div>
       <button className="add-btn">Add</button>
