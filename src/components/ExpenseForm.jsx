@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Input from "./Input";
+import Select from "./Select";
 
 const ExpenseForm = ({ setExpenses }) => {
   const [expense, setExpense] = useState({
@@ -70,25 +71,16 @@ const ExpenseForm = ({ setExpenses }) => {
         onChange={handleChange}
         error={error.title}
       />
-      <div className="input-container">
-        <label htmlFor="category">Category</label>
-        <select
-          id="category"
-          name="category"
-          value={expense.category}
-          onChange={handleChange}
-        >
-          <option value="" hidden>
-            Select Category
-          </option>
-          <option value="grocery">Grocery</option>
-          <option value="clothes">Clothes</option>
-          <option value="bills">Bills</option>
-          <option value="education">Education</option>
-          <option value="medicine">Medicine</option>
-        </select>
-        <p className="error">{error.category}</p>
-      </div>
+      <Select
+        id="category"
+        label="Category"
+        name="category"
+        value={expense.category}
+        onChange={handleChange}
+        options={["Grocery", "Clothes", "Bills", "Education", "Medicine"]}
+        defaultOption="Select Category"
+        error={error.category}
+      />
       <Input
         id="amount"
         label="Amount"
