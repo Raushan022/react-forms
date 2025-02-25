@@ -7,12 +7,39 @@ const ExpenseForm = ({ setExpenses }) => {
     amount: "",
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validate = (formData) => {
+    const errorsData = {};
+
+    if (!formData.title) {
+      errorsData.title = "Title is required";
+    }
+
+    if (!formData.category) {
+      errorsData.category = "category is required";
+    }
+
+    if (!formData.amount) {
+      errorsData.amount = "amount is required";
+    }
+
+    setErrors(errorsData);
+    return errorsData;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const validateResult = validate(expense);
+    console.log(errors);
+    if (Object.keys(validateResult).length) return;
+
     setExpenses((prevState) => [
       ...prevState,
       { ...expense, id: crypto.randomUUID() },
     ]);
+
     setExpense({
       title: "",
       category: "",
@@ -25,8 +52,11 @@ const ExpenseForm = ({ setExpenses }) => {
     setExpense((prevData) => ({
       ...prevData,
       // [name]: value,
-       [name]: e.target.value,       //can write like this also, same thing
+      [name]: e.target.value, //can write like this also, same thing
     }));
+
+    //remove errors when typing
+    setErrors({});
   };
 
   return (
@@ -39,6 +69,7 @@ const ExpenseForm = ({ setExpenses }) => {
           value={expense.title}
           onChange={handleChange}
         />
+        <p className="errors">{errors.title}</p>
       </div>
       <div className="input-container">
         <label htmlFor="category">Category</label>
@@ -57,6 +88,7 @@ const ExpenseForm = ({ setExpenses }) => {
           <option value="education">Education</option>
           <option value="medicine">Medicine</option>
         </select>
+        <p className="errors">{errors.category}</p>
       </div>
       <div className="input-container">
         <label htmlFor="amount">Amount</label>
@@ -66,6 +98,7 @@ const ExpenseForm = ({ setExpenses }) => {
           value={expense.amount}
           onChange={handleChange}
         />
+        <p className="errors">{errors.amount}</p>
       </div>
       <button className="add-btn">Add</button>
     </form>
