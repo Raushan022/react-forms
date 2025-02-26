@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import ContextMenu from "./ContextMenu";
 
-const ExpenseTable = ({ expenses}) => {
+const ExpenseTable = ({ expenses, setExpenses }) => {
   const [category, setCategory] = useState("");
   const [menuPosition, setMenuPosition] = useState({});
+  const [rowId, setRowId] = useState("");
 
   const filteredData = expenses.filter((expense) => {
     return expense.category.toLowerCase().includes(category);
@@ -11,7 +12,12 @@ const ExpenseTable = ({ expenses}) => {
 
   return (
     <>
-      <ContextMenu menuPosition={menuPosition} setMenuPosition={setMenuPosition} />
+      <ContextMenu
+        menuPosition={menuPosition}
+        setMenuPosition={setMenuPosition}
+        setExpenses={setExpenses}
+        rowId={rowId}
+      />
       <table className="expense-table" onClick={() => setMenuPosition({})}>
         <thead>
           <tr>
@@ -61,6 +67,7 @@ const ExpenseTable = ({ expenses}) => {
                 e.preventDefault();
                 // e.stopPropagation();
                 setMenuPosition({ left: e.clientX + 4, top: e.clientY + 4 });
+                setRowId(id);
               }}
             >
               <td>{title}</td>
