@@ -34,7 +34,7 @@ const ExpenseForm = ({ setExpenses }) => {
     e.preventDefault();
 
     const validateResult = validate(expense);
-    console.log(error);
+    // console.log(error);
     if (Object.keys(validateResult).length) return;
 
     setExpenses((prevState) => [
