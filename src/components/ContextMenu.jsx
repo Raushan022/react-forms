@@ -9,7 +9,7 @@ const ContextMenu = ({
   setExpense,
   setEditingRowId
 }) => {
-  // if (!menuPosition.left) return
+  if (!menuPosition?.left) return;
   return (
     <div className="context-menu" style={menuPosition}>
       <div
