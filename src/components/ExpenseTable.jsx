@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import ContextMenu from "./ContextMenu";
 
-const ExpenseTable = ({ expenses, setExpenses }) => {
+const ExpenseTable = ({
+  expenses,
+  setExpenses,
+  setExpense,
+  setEditingRowId,
+}) => {
   const [category, setCategory] = useState("");
   const [menuPosition, setMenuPosition] = useState({});
   const [rowId, setRowId] = useState("");
@@ -10,6 +15,11 @@ const ExpenseTable = ({ expenses, setExpenses }) => {
     return expense.category.toLowerCase().includes(category);
   });
 
+  const total = filteredData.reduce(
+    (accumulator, current) => accumulator + parseInt(current.amount),
+    0
+  );
+
   return (
     <>
       <ContextMenu
@@ -17,6 +27,9 @@ const ExpenseTable = ({ expenses, setExpenses }) => {
         setMenuPosition={setMenuPosition}
         setExpenses={setExpenses}
         rowId={rowId}
+        expenses={expenses}
+        setExpense={setExpense}
+        setEditingRowId={setEditingRowId}
       />
       <table className="expense-table" onClick={() => setMenuPosition({})}>
         <thead>
@@ -78,7 +91,7 @@ const ExpenseTable = ({ expenses, setExpenses }) => {
           <tr>
             <th>Total</th>
             <th></th>
-            <th>₹8100</th>
+            <th>₹{total}</th>
           </tr>
         </tbody>
       </table>
